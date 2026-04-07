@@ -99,7 +99,6 @@
         .achiever-score-details { font-size: 11px; color: var(--text-muted); display: flex; gap: 10px; }
         .achiever-score-details span { display: flex; align-items: center; gap: 3px; }
 
-        /* ====== Active Time Matrix Styles ====== */
         .utilization-section { background: var(--bg-main); padding: 20px; border-radius: 8px; border: 1px solid var(--accent-blue); margin-bottom: 20px; transition: all 0.3s; }
         .utilization-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; color: var(--accent-blue); font-size: 18px; font-weight: bold; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
         .util-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
@@ -148,7 +147,6 @@
         .sum-title.lidar { color: var(--accent-green); }
         .sum-title.lane { color: var(--accent-red); }
 
-        /* ====== Modal & Drill-Down Accordion ====== */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); display: none; justify-content: center; align-items: center; z-index: 1000; }
         body.light-mode .modal-overlay { background: rgba(0, 0, 0, 0.5); }
         .modal-content { background: var(--bg-card); padding: 0; border-radius: 8px; width: 90%; max-width: 360px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); position: relative; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--border-color); animation: popIn 0.3s ease-out; transition: background 0.3s; }
@@ -315,7 +313,7 @@
                 </div>
             </div>
             <div class="idle-users-list" id="idleUsersContainer">
-                </div>
+            </div>
         </div>
 
         <div class="main-stats">
@@ -386,6 +384,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbzuJ-olxHqLh0zC0T3aQD7CUN4hvE1iBZmvc73UZ0v7GKkQqeYRiwVVMlH03GeCSou3/exec";
+        
         let currentUser = "";
         let refreshInterval;
         let cachedData = {}; 
@@ -601,9 +600,6 @@
                 $('#sumOverLaneQa').text(data.dailySummary.overnight.laneQa);
             }
 
-            // ==========================================
-            // التحديث الجديد: عرض داتا الـ Active Time
-            // ==========================================
             if (data.activeAnalysis) {
                 $('#actTotalUsers').text(data.activeAnalysis.totalUsers);
                 $('#actTotalHours').text(data.activeAnalysis.totalHours.toFixed(2));
