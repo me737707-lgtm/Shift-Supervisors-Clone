@@ -50,7 +50,7 @@
         .dashboard-container { width: 100%; max-width: 1100px; background: var(--bg-card); border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); padding: 25px; display: none; border: 1px solid var(--border-color); transition: all 0.3s; }
         
         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; transition: all 0.3s; }
-        .header h2 { color: var(--text-main); margin: 0; }
+        .header h2 { color: var(--text-main); margin: 0; display: flex; align-items: center; gap: 10px; }
         .header-right { display: flex; align-items: center; gap: 10px; }
         
         .theme-toggle-btn { background: transparent; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; padding: 5px 10px; transition: color 0.3s; }
@@ -137,7 +137,7 @@
         .sum-title.lidar { color: var(--accent-green); }
         .sum-title.lane { color: var(--accent-red); }
 
-        /* ====== ACTIVE TIME ANALYSIS SECTION (NEW) ====== */
+        /* ====== ACTIVE TIME ANALYSIS SECTION (UPDATED) ====== */
         .active-time-section {
             background: linear-gradient(135deg, rgba(138, 180, 248, 0.05), rgba(251, 188, 4, 0.05));
             border-radius: 12px;
@@ -212,17 +212,9 @@
             letter-spacing: 1px;
         }
 
-        .at-stat-card.warning .at-stat-value {
-            color: var(--accent-red);
-        }
-
-        .at-stat-card.success .at-stat-value {
-            color: var(--accent-green);
-        }
-
-        .at-stat-card.gold .at-stat-value {
-            color: var(--accent-gold);
-        }
+        .at-stat-card.warning .at-stat-value { color: var(--accent-red); }
+        .at-stat-card.success .at-stat-value { color: var(--accent-green); }
+        .at-stat-card.gold .at-stat-value { color: var(--accent-gold); }
 
         /* Alert Banner */
         .alert-banner {
@@ -242,101 +234,230 @@
             50% { opacity: 0.7; }
         }
 
-        .alert-icon {
-            font-size: 24px;
-            color: var(--accent-red);
-        }
+        .alert-icon { font-size: 24px; color: var(--accent-red); }
+        .alert-text { flex: 1; }
+        .alert-title { font-weight: 700; color: var(--accent-red); font-size: 14px; margin-bottom: 3px; }
+        .alert-subtitle { font-size: 12px; color: var(--text-muted); }
 
-        .alert-text {
-            flex: 1;
-        }
-
-        .alert-title {
-            font-weight: 700;
-            color: var(--accent-red);
-            font-size: 14px;
-            margin-bottom: 3px;
-        }
-
-        .alert-subtitle {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        /* Comparison Container */
-        .comparison-container {
+        /* ====== COLLAPSIBLE COMPARISON CONTAINER (NEW DESIGN) ====== */
+        .comparison-wrapper {
             background: var(--bg-main);
             border-radius: 10px;
-            overflow: hidden;
             border: 1px solid var(--border-color);
+            overflow: hidden;
         }
 
+        .comparison-trigger {
+            background: linear-gradient(90deg, rgba(138, 180, 248, 0.08), rgba(251, 188, 4, 0.08));
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .comparison-trigger:hover {
+            background: linear-gradient(90deg, rgba(138, 180, 248, 0.15), rgba(251, 188, 4, 0.15));
+        }
+
+        .comparison-trigger.active {
+            border-bottom-color: var(--border-color);
+        }
+
+        .trigger-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .trigger-icon {
+            font-size: 24px;
+            color: var(--accent-gold);
+            transition: transform 0.3s ease;
+        }
+
+        .comparison-trigger.active .trigger-icon {
+            transform: rotate(180deg);
+        }
+
+        .trigger-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .trigger-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .trigger-badges {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .trigger-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-danger {
+            background: rgba(242, 139, 130, 0.15);
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+        }
+
+        .badge-success {
+            background: rgba(129, 201, 149, 0.15);
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+        }
+
+        .trigger-arrow {
+            color: var(--text-muted);
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .comparison-trigger.active .trigger-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Collapsible Content */
+        .comparison-content-collapsible {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.3s ease;
+            padding: 0 20px;
+        }
+
+        .comparison-content-collapsible.expanded {
+            max-height: 500px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* Tabs inside collapsible */
         .comparison-tabs {
             display: flex;
             background: rgba(0,0,0,0.2);
-            border-bottom: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 15px;
         }
 
         .comparison-tab {
             flex: 1;
-            padding: 12px 20px;
+            padding: 10px 15px;
             text-align: center;
             cursor: pointer;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-muted);
-            transition: all 0.3s;
             border: none;
             background: transparent;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .comparison-tab:hover {
+            background: rgba(255,255,255,0.05);
         }
 
         .comparison-tab.active {
             background: var(--accent-red);
             color: #fff;
+            box-shadow: 0 2px 8px rgba(242, 139, 130, 0.3);
         }
 
-        .comparison-tab:not(.last) {
-            border-right: 1px solid var(--border-color);
+        .comparison-tab.success-tab.active {
+            background: var(--accent-green);
+            box-shadow: 0 2px 8px rgba(129, 201, 149, 0.3);
         }
 
-        .comparison-content {
-            padding: 20px;
-            max-height: 400px;
-            overflow-y: auto;
+        /* Export Button */
+        .export-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            margin-left: auto;
         }
 
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .export-btn i {
+            font-size: 14px;
+        }
+
+        .tab-header-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .tab-title-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Table Styles */
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 13px;
         }
 
         .comparison-table th {
             background: rgba(0,0,0,0.3);
-            padding: 12px;
+            padding: 12px 10px;
             text-align: left;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             position: sticky;
             top: 0;
+            z-index: 1;
         }
 
         .comparison-table td {
-            padding: 12px;
+            padding: 10px;
             border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .comparison-table tr:hover {
-            background: rgba(138, 180, 248, 0.1);
+            background: rgba(138, 180, 248, 0.08);
         }
 
         .user-status-badge {
             display: inline-block;
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
         }
@@ -353,14 +474,25 @@
             border: 1px solid var(--accent-green);
         }
 
+        .hours-value {
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
         .no-data-message {
             text-align: center;
-            padding: 40px;
+            padding: 30px;
             color: var(--text-muted);
             font-style: italic;
         }
 
-        /* ====== MODAL & DRILL-DOWN ====== */
+        .no-data-message i {
+            font-size: 36px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* ====== MODAL ====== */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); display: none; justify-content: center; align-items: center; z-index: 1000; }
         body.light-mode .modal-overlay { background: rgba(0, 0, 0, 0.5); }
         .modal-content { background: var(--bg-card); padding: 0; border-radius: 8px; width: 90%; max-width: 360px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); position: relative; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--border-color); animation: popIn 0.3s ease-out; transition: background 0.3s; }
@@ -400,6 +532,8 @@
         @media (max-width: 768px) { 
             .shift-summary-grid { grid-template-columns: 1fr; }
             .active-time-grid { grid-template-columns: 1fr 1fr; }
+            .comparison-tabs { flex-direction: column; }
+            .trigger-badges { flex-direction: column; gap: 5px; }
         }
         @media (max-width: 600px) {    
             body { padding: 10px; }
@@ -412,8 +546,8 @@
             .filter-group { width: 100%; }
             .status-indicator { width: 100%; justify-content: center; margin-top: 5px; }
             .active-time-grid { grid-template-columns: 1fr; }
-            .comparison-tabs { flex-direction: column; }
-            .comparison-tab:not(.last) { border-right: none; border-bottom: 1px solid var(--border-color); }
+            .comparison-trigger { flex-direction: column; text-align: center; gap: 10px; }
+            .trigger-left { flex-direction: column; }
         }
     </style>
 </head>
@@ -517,7 +651,7 @@
             </div>
         </div>
 
-        <!-- ==================== ACTIVE TIME ANALYSIS SECTION (NEW) ==================== -->
+        <!-- ==================== ACTIVE TIME ANALYSIS SECTION ==================== -->
         <div class="active-time-section" id="activeTimeSection">
             <div class="active-time-header">
                 <h3 class="active-time-title">
@@ -568,55 +702,98 @@
                 </div>
             </div>
 
-            <!-- Comparison Tabs -->
-            <div class="comparison-container">
-                <div class="comparison-tabs">
-                    <button class="comparison-tab active" onclick="switchComparisonTab('nosubmit')" id="tabNosubmit">
-                        <i class="fas fa-exclamation-circle"></i> No Submission (<span id="countNosubmit">0</span>)
-                    </button>
-                    <button class="comparison-tab last" onclick="switchComparisonTab('submitted')" id="tabSubmitted">
-                        <i class="fas fa-check-double"></i> With Submission (<span id="countSubmitted">0</span>)
-                    </button>
-                </div>
-
-                <!-- Tab Content: No Submission -->
-                <div class="comparison-content" id="contentNosubmit">
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>User Name</th>
-                                <th>Logged Hours</th>
-                                <th>Breakdown (C+D)</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbodyNosubmit">
-                        </tbody>
-                    </table>
-                    <div id="noDataNosubmit" class="no-data-message" style="display: none;">
-                        <i class="fas fa-check-circle" style="color: var(--accent-green); font-size: 40px; margin-bottom: 10px;"></i><br>
-                        Great! All active users have submitted tasks today.
+            <!-- ====== COLLAPSIBLE COMPARISON CONTAINER (NEW) ====== -->
+            <div class="comparison-wrapper">
+                <!-- Trigger/Header - Click to Expand/Collapse -->
+                <div class="comparison-trigger" id="comparisonTrigger" onclick="toggleComparison()">
+                    <div class="trigger-left">
+                        <i class="fas fa-chevron-down trigger-icon"></i>
+                        <div>
+                            <div class="trigger-title">
+                                <i class="fas fa-chart-bar" style="color: var(--accent-blue); margin-right: 8px;"></i>
+                                Detailed Comparison Report
+                            </div>
+                            <div class="trigger-subtitle">Click to expand user lists & export data</div>
+                        </div>
+                    </div>
+                    <div class="trigger-badges">
+                        <span class="trigger-badge badge-danger" id="triggerBadgeNosubmit">
+                            <i class="fas fa-exclamation-circle"></i>
+                            No Submission: <strong id="triggerCountNosubmit">0</strong>
+                        </span>
+                        <span class="trigger-badge badge-success" id="triggerBadgeSubmitted">
+                            <i class="fas fa-check-circle"></i>
+                            With Submission: <strong id="triggerCountSubmitted">0</strong>
+                        </span>
+                        <i class="fas fa-angle-down trigger-arrow"></i>
                     </div>
                 </div>
 
-                <!-- Tab Content: With Submission -->
-                <div class="comparison-content" id="contentSubmitted" style="display: none;">
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>User Name</th>
-                                <th>Total Hours</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbodySubmitted">
-                        </tbody>
-                    </table>
-                    <div id="noDataSubmitted" class="no-data-message" style="display: none;">
-                        No data available.
+                <!-- Collapsible Content (Hidden by Default) -->
+                <div class="comparison-content-collapsible" id="comparisonContent">
+                    
+                    <!-- Tabs -->
+                    <div class="comparison-tabs">
+                        <button class="comparison-tab active" onclick="switchComparisonTab('nosubmit')" id="tabNosubmit">
+                            <i class="fas fa-exclamation-circle"></i> No Submission (<span id="countNosubmit">0</span>)
+                        </button>
+                        <button class="comparison-tab success-tab" onclick="switchComparisonTab('submitted')" id="tabSubmitted">
+                            <i class="fas fa-check-double"></i> With Submission (<span id="countSubmitted">0</span>)
+                        </button>
                     </div>
+
+                    <!-- Tab Content: No Submission -->
+                    <div class="comparison-content" id="contentNosubmit" style="display: block;">
+                        <div class="tab-header-wrapper">
+                            <span class="tab-title-text">Users who are active but did NOT submit tasks</span>
+                            <button class="export-btn" onclick="exportToExcel('nosubmit')">
+                                <i class="fas fa-file-excel"></i> Export Excel
+                            </button>
+                        </div>
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>User Name</th>
+                                    <th>Logged Hours</th>
+                                    <th>Breakdown (C+D)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyNosubmit">
+                            </tbody>
+                        </table>
+                        <div id="noDataNosubmit" class="no-data-message" style="display: none;">
+                            <i class="fas fa-check-circle" style="color: var(--accent-green);"></i><br>
+                            Great! All active users have submitted tasks today.
+                        </div>
+                    </div>
+
+                    <!-- Tab Content: With Submission -->
+                    <div class="comparison-content" id="contentSubmitted" style="display: none;">
+                        <div class="tab-header-wrapper">
+                            <span class="tab-title-text">Users who are active AND submitted tasks</span>
+                            <button class="export-btn" onclick="exportToExcel('submitted')" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                                <i class="fas fa-file-excel"></i> Export Excel
+                            </button>
+                        </div>
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>User Name</th>
+                                    <th>Total Hours</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodySubmitted">
+                            </tbody>
+                        </table>
+                        <div id="noDataSubmitted" class="no-data-message" style="display: none;">
+                            No data available.
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -699,6 +876,13 @@
         let currentFetchId = 0;       
         let currentFetchContext = "";  
         let lastTotalTasks = 0;       
+
+        // Store data for export
+        let currentActiveTimeData = {
+            noSubmission: [],
+            withSubmission: [],
+            date: ''
+        };
 
         // ==========================================
         // NETWORK STATUS
@@ -947,6 +1131,7 @@
             const rawDate = $('#taskDate').val();
             if(!rawDate) return;
 
+            console.log("🔍 Fetching Active Time Analysis for:", rawDate);
             $('#atLoadingIndicator').fadeIn(200);
             
             const analysisUrl = `${API_URL}?action=getActiveTimeAnalysis&date=${encodeURIComponent(rawDate)}`;
@@ -955,27 +1140,36 @@
                 .then(response => response.json())
                 .then(response => {
                     $('#atLoadingIndicator').fadeOut(200);
+                    console.log("📊 Active Time Response:", response);
                     
                     if (response.success) {
                         renderActiveTimeAnalysis(response.data);
                     } else {
-                        console.error("Active Time Error:", response.message);
+                        console.error("❌ API Error:", response.message);
+                        alert("⚠️ Error fetching Active Time: " + response.message);
                     }
                 })
                 .catch(error => {
                     $('#atLoadingIndicator').fadeOut(200);
-                    console.error("Fetch Active Time Error:", error);
+                    console.error("🚨 Fetch Error:", error);
                 });
         }
 
         function renderActiveTimeAnalysis(data) {
+            // Store for export
+            currentActiveTimeData.date = $('#taskDate').val();
+            currentActiveTimeData.noSubmission = data.usersWithNoSubmission || [];
+            currentActiveTimeData.withSubmission = data.usersWithSubmission || [];
+
             // Update Stats Cards
             $('#atTotalUsers').text(data.totalActiveUsers);
             $('#atTotalHours').text(data.totalHours + 'h');
             $('#atNoSubmission').text(data.usersWithNoSubmission.length);
             $('#atWithSubmission').text(data.usersWithSubmission.length);
 
-            // Update Tab Counts
+            // Update Trigger Badges
+            $('#triggerCountNosubmit').text(data.usersWithNoSubmission.length);
+            $('#triggerCountSubmitted').text(data.usersWithSubmission.length);
             $('#countNosubmit').text(data.usersWithNoSubmission.length);
             $('#countSubmitted').text(data.usersWithSubmission.length);
 
@@ -1000,11 +1194,11 @@
                         <tr>
                             <td><strong>${index + 1}</strong></td>
                             <td><strong style="color: var(--text-main);">${user.name}</strong></td>
-                            <td><span style="color: var(--accent-gold); font-weight: 700;">${user.totalHours}h</span></td>
+                            <td><span class="hours-value">${user.hours}h</span></td>
                             <td style="font-size: 12px; color: var(--text-muted);">
                                 C: ${user.hoursC}h + D: ${user.hoursD}h
                             </td>
-                            <td><span class="user-status-badge status-danger">No Submission</span></td>
+                            <td><span class="user-status-badge status-danger">NO SUBMISSION</span></td>
                         </tr>
                     `);
                 });
@@ -1025,8 +1219,8 @@
                         <tr>
                             <td><strong>${index + 1}</strong></td>
                             <td><strong style="color: var(--text-main);">${user.name}</strong></td>
-                            <td><span style="color: var(--accent-green); font-weight: 700;">${user.hours}h</span></td>
-                            <td><span class="user-status-badge status-success">✓ Submitted</span></td>
+                            <td><span class="hours-value" style="color: var(--accent-green);">${user.hours}h</span></td>
+                            <td><span class="user-status-badge status-success">✓ SUBMITTED</span></td>
                         </tr>
                     `);
                 });
@@ -1036,9 +1230,21 @@
             }
         }
 
+        // ==========================================
+        // 🆕 COLLAPSE/EXPAND FUNCTIONALITY
+        // ==========================================
+        function toggleComparison() {
+            const trigger = document.getElementById('comparisonTrigger');
+            const content = document.getElementById('comparisonContent');
+            
+            trigger.classList.toggle('active');
+            content.classList.toggle('expanded');
+        }
+
         function switchComparisonTab(tabName) {
             currentComparisonTab = tabName;
             
+            // Update tab styles
             $('.comparison-tab').removeClass('active');
             if (tabName === 'nosubmit') {
                 $('#tabNosubmit').addClass('active');
@@ -1049,6 +1255,65 @@
                 $('#contentNosubmit').hide();
                 $('#contentSubmitted').show();
             }
+        }
+
+        // ==========================================
+        // 🆕 EXPORT TO EXCEL FUNCTION
+        // ==========================================
+        function exportToExcel(type) {
+            let dataToExport;
+            let filename;
+            let headers;
+
+            if (type === 'nosubmit') {
+                dataToExport = currentActiveTimeData.noSubmission;
+                filename = `No_Submission_Users_${currentActiveTimeData.date}.csv`;
+                headers = ['#', 'User Name', 'Logged Hours (Total)', 'Hours C (Interact)', 'Hours D (Overhead)', 'Status'];
+            } else {
+                dataToExport = currentActiveTimeData.withSubmission;
+                filename = `With_Submission_Users_${currentActiveTimeData.date}.csv`;
+                headers = ['#', 'User Name', 'Total Logged Hours', 'Status'];
+            }
+
+            if (!dataToExport || dataToExport.length === 0) {
+                alert('No data to export!');
+                return;
+            }
+
+            // Build CSV content
+            let csvContent = headers.join(',') + '\n';
+            
+            dataToExport.forEach((user, index) => {
+                if (type === 'nosubmit') {
+                    csvContent += `${index + 1},"${user.name}",${user.hours},${user.hoursC},${user.hoursD},"NO SUBMISSION"\n`;
+                } else {
+                    csvContent += `${index + 1},"${user.name}",${user.hours},"SUBMITTED"\n`;
+                }
+            });
+
+            // Create and download file
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Show success message
+            console.log(`📥 Exported ${dataToExport.length} records to ${filename}`);
+            
+            // Visual feedback
+            const btn = event.target.closest('.export-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Done!';
+            btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+            }, 2000);
         }
 
         // ==========================================
@@ -1137,16 +1402,16 @@
                 const sortedQcs = Object.keys(qcTotals).sort((a,b) => qcTotals[b].total - qcTotals[a].total);
                 
                 for(let qc of sortedQcs) {
-                    let data = qcTotals[qc];
+                    let qData = qcTotals[qc];
                     bodyHtml += `
                         <div class="detail-row" style="border-left: 2px solid var(--border-color); display:flex; flex-direction:column; gap:4px; padding:8px 10px; margin-bottom: 5px; background: rgba(0,0,0,0.1);">
                             <div style="display:flex; justify-content:space-between; width:100%;">
                                 <span style="font-weight:500;">${qc}</span>
-                                <strong style="color:var(--text-main)">${data.total}</strong>
+                                <strong style="color:var(--text-main)">${qData.total}</strong>
                             </div>
                             <div style="display:flex; justify-content:flex-start; gap:10px; font-size:11px; color:var(--text-muted);">
-                                <span><i class="fas fa-circle" style="color:var(--accent-green); font-size:6px;"></i> Lidar: ${data.lidar}</span>
-                                <span><i class="fas fa-circle" style="color:var(--accent-red); font-size:6px;"></i> Lane: ${data.lane}</span>
+                                <span><i class="fas fa-circle" style="color:var(--accent-green); font-size:6px;"></i> Lidar: ${qData.lidar}</span>
+                                <span><i class="fas fa-circle" style="color:var(--accent-red); font-size:6px;"></i> Lane: ${qData.lane}</span>
                             </div>
                         </div>`;
                 }
