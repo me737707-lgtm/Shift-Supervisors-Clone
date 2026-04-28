@@ -80,8 +80,8 @@
         .reload-indicator i { animation: spin 1s linear infinite; font-size: 10px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .main-stats, .unit-section, .summary-section, .achievers-banner, .active-time-section { transition: opacity 0.3s ease; }
-        .fetching-data { opacity: 0.4; pointer-events: none; }
+        /* Subtle background refresh — no opacity fade */
+        .bg-refreshing { border-color: var(--accent-blue) !important; transition: border-color 0.3s; }
 
         /* ====== ACHIEVERS BANNER ====== */
         .achievers-banner { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
@@ -137,7 +137,7 @@
         .sum-title.lidar { color: var(--accent-green); }
         .sum-title.lane { color: var(--accent-red); }
 
-        /* ====== ACTIVE TIME ANALYSIS SECTION (UPDATED) ====== */
+        /* ====== ACTIVE TIME ANALYSIS SECTION ====== */
         .active-time-section {
             background: linear-gradient(135deg, rgba(138, 180, 248, 0.05), rgba(251, 188, 4, 0.05));
             border-radius: 12px;
@@ -146,351 +146,63 @@
             margin-bottom: 25px;
             transition: all 0.3s;
         }
-
-        .active-time-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .active-time-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--accent-gold);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 0;
-        }
-
-        .active-time-title i {
-            animation: pulse 2s infinite;
-        }
-
-        .active-time-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .at-stat-card {
-            background: var(--bg-card);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .at-stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .at-stat-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .at-stat-value {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--accent-blue);
-            display: block;
-            margin: 5px 0;
-        }
-
-        .at-stat-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
+        .active-time-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .active-time-title { font-size: 22px; font-weight: 700; color: var(--accent-gold); display: flex; align-items: center; gap: 10px; margin: 0; }
+        .active-time-title i { animation: pulse 2s infinite; }
+        .active-time-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .at-stat-card { background: var(--bg-card); border-radius: 10px; padding: 20px; text-align: center; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s; }
+        .at-stat-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .at-stat-icon { font-size: 32px; margin-bottom: 10px; }
+        .at-stat-value { font-size: 28px; font-weight: 800; color: var(--accent-blue); display: block; margin: 5px 0; }
+        .at-stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
         .at-stat-card.warning .at-stat-value { color: var(--accent-red); }
         .at-stat-card.success .at-stat-value { color: var(--accent-green); }
         .at-stat-card.gold .at-stat-value { color: var(--accent-gold); }
 
-        /* Alert Banner */
-        .alert-banner {
-            background: linear-gradient(90deg, rgba(242, 139, 130, 0.1), rgba(251, 188, 4, 0.1));
-            border-left: 4px solid var(--accent-red);
-            padding: 15px 20px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            animation: alertPulse 3s infinite;
-        }
-
-        @keyframes alertPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
+        .alert-banner { background: linear-gradient(90deg, rgba(242, 139, 130, 0.1), rgba(251, 188, 4, 0.1)); border-left: 4px solid var(--accent-red); padding: 15px 20px; border-radius: 6px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; animation: alertPulse 3s infinite; }
+        @keyframes alertPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
         .alert-icon { font-size: 24px; color: var(--accent-red); }
         .alert-text { flex: 1; }
         .alert-title { font-weight: 700; color: var(--accent-red); font-size: 14px; margin-bottom: 3px; }
         .alert-subtitle { font-size: 12px; color: var(--text-muted); }
 
-        /* ====== COLLAPSIBLE COMPARISON CONTAINER (NEW DESIGN) ====== */
-        .comparison-wrapper {
-            background: var(--bg-main);
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-        }
-
-        .comparison-trigger {
-            background: linear-gradient(90deg, rgba(138, 180, 248, 0.08), rgba(251, 188, 4, 0.08));
-            padding: 18px 25px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
-        }
-
-        .comparison-trigger:hover {
-            background: linear-gradient(90deg, rgba(138, 180, 248, 0.15), rgba(251, 188, 4, 0.15));
-        }
-
-        .comparison-trigger.active {
-            border-bottom-color: var(--border-color);
-        }
-
-        .trigger-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .trigger-icon {
-            font-size: 24px;
-            color: var(--accent-gold);
-            transition: transform 0.3s ease;
-        }
-
-        .comparison-trigger.active .trigger-icon {
-            transform: rotate(180deg);
-        }
-
-        .trigger-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .trigger-subtitle {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .trigger-badges {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .trigger-badge {
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .badge-danger {
-            background: rgba(242, 139, 130, 0.15);
-            color: var(--accent-red);
-            border: 1px solid var(--accent-red);
-        }
-
-        .badge-success {
-            background: rgba(129, 201, 149, 0.15);
-            color: var(--accent-green);
-            border: 1px solid var(--accent-green);
-        }
-
-        .trigger-arrow {
-            color: var(--text-muted);
-            font-size: 18px;
-            transition: transform 0.3s ease;
-        }
-
-        .comparison-trigger.active .trigger-arrow {
-            transform: rotate(180deg);
-        }
-
-        /* Collapsible Content */
-        .comparison-content-collapsible {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.3s ease;
-            padding: 0 20px;
-        }
-
-        .comparison-content-collapsible.expanded {
-            max-height: 500px;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        /* Tabs inside collapsible */
-        .comparison-tabs {
-            display: flex;
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
-            padding: 4px;
-            margin-bottom: 15px;
-        }
-
-        .comparison-tab {
-            flex: 1;
-            padding: 10px 15px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-            color: var(--text-muted);
-            border: none;
-            background: transparent;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .comparison-tab:hover {
-            background: rgba(255,255,255,0.05);
-        }
-
-        .comparison-tab.active {
-            background: var(--accent-red);
-            color: #fff;
-            box-shadow: 0 2px 8px rgba(242, 139, 130, 0.3);
-        }
-
-        .comparison-tab.success-tab.active {
-            background: var(--accent-green);
-            box-shadow: 0 2px 8px rgba(129, 201, 149, 0.3);
-        }
-
-        /* Export Button */
-        .export-btn {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
-            margin-left: auto;
-        }
-
-        .export-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-        }
-
-        .export-btn i {
-            font-size: 14px;
-        }
-
-        .tab-header-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .tab-title-text {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        /* Table Styles */
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-
-        .comparison-table th {
-            background: rgba(0,0,0,0.3);
-            padding: 12px 10px;
-            text-align: left;
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: sticky;
-            top: 0;
-            z-index: 1;
-        }
-
-        .comparison-table td {
-            padding: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 13px;
-        }
-
-        .comparison-table tr:hover {
-            background: rgba(138, 180, 248, 0.08);
-        }
-
-        .user-status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .status-danger {
-            background: rgba(242, 139, 130, 0.2);
-            color: var(--accent-red);
-            border: 1px solid var(--accent-red);
-        }
-
-        .status-success {
-            background: rgba(129, 201, 149, 0.2);
-            color: var(--accent-green);
-            border: 1px solid var(--accent-green);
-        }
-
-        .hours-value {
-            font-weight: 700;
-            color: var(--accent-gold);
-        }
-
-        .no-data-message {
-            text-align: center;
-            padding: 30px;
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .no-data-message i {
-            font-size: 36px;
-            margin-bottom: 10px;
-            display: block;
-        }
+        .comparison-wrapper { background: var(--bg-main); border-radius: 10px; border: 1px solid var(--border-color); overflow: hidden; }
+        .comparison-trigger { background: linear-gradient(90deg, rgba(138, 180, 248, 0.08), rgba(251, 188, 4, 0.08)); padding: 18px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease; border-bottom: 2px solid transparent; }
+        .comparison-trigger:hover { background: linear-gradient(90deg, rgba(138, 180, 248, 0.15), rgba(251, 188, 4, 0.15)); }
+        .comparison-trigger.active { border-bottom-color: var(--border-color); }
+        .trigger-left { display: flex; align-items: center; gap: 15px; }
+        .trigger-icon { font-size: 24px; color: var(--accent-gold); transition: transform 0.3s ease; }
+        .comparison-trigger.active .trigger-icon { transform: rotate(180deg); }
+        .trigger-title { font-size: 16px; font-weight: 700; color: var(--text-main); }
+        .trigger-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+        .trigger-badges { display: flex; gap: 10px; align-items: center; }
+        .trigger-badge { padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .badge-danger { background: rgba(242, 139, 130, 0.15); color: var(--accent-red); border: 1px solid var(--accent-red); }
+        .badge-success { background: rgba(129, 201, 149, 0.15); color: var(--accent-green); border: 1px solid var(--accent-green); }
+        .trigger-arrow { color: var(--text-muted); font-size: 18px; transition: transform 0.3s ease; }
+        .comparison-trigger.active .trigger-arrow { transform: rotate(180deg); }
+        .comparison-content-collapsible { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out, padding 0.3s ease; padding: 0 20px; }
+        .comparison-content-collapsible.expanded { max-height: 500px; padding: 20px; overflow-y: auto; }
+        .comparison-tabs { display: flex; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 4px; margin-bottom: 15px; }
+        .comparison-tab { flex: 1; padding: 10px 15px; text-align: center; cursor: pointer; font-weight: 600; font-size: 13px; color: var(--text-muted); border: none; background: transparent; border-radius: 6px; transition: all 0.3s ease; }
+        .comparison-tab:hover { background: rgba(255,255,255,0.05); }
+        .comparison-tab.active { background: var(--accent-red); color: #fff; box-shadow: 0 2px 8px rgba(242, 139, 130, 0.3); }
+        .comparison-tab.success-tab.active { background: var(--accent-green); box-shadow: 0 2px 8px rgba(129, 201, 149, 0.3); }
+        .export-btn { background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.3s ease; margin-left: auto; }
+        .export-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
+        .export-btn i { font-size: 14px; }
+        .tab-header-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .tab-title-text { font-size: 14px; font-weight: 600; color: var(--text-main); }
+        .comparison-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .comparison-table th { background: rgba(0,0,0,0.3); padding: 12px 10px; text-align: left; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; position: sticky; top: 0; z-index: 1; }
+        .comparison-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
+        .comparison-table tr:hover { background: rgba(138, 180, 248, 0.08); }
+        .user-status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+        .status-danger { background: rgba(242, 139, 130, 0.2); color: var(--accent-red); border: 1px solid var(--accent-red); }
+        .status-success { background: rgba(129, 201, 149, 0.2); color: var(--accent-green); border: 1px solid var(--accent-green); }
+        .hours-value { font-weight: 700; color: var(--accent-gold); }
+        .no-data-message { text-align: center; padding: 30px; color: var(--text-muted); font-style: italic; }
+        .no-data-message i { font-size: 36px; margin-bottom: 10px; display: block; }
 
         /* ====== MODAL ====== */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); display: none; justify-content: center; align-items: center; z-index: 1000; }
@@ -503,23 +215,19 @@
         .modal-body { padding: 20px; overflow-y: auto; flex-grow: 1; }
         .modal-close { position: absolute; top: 10px; right: 10px; font-size: 20px; cursor: pointer; color: inherit; opacity: 0.7; }
         .modal-close:hover { opacity: 1; }
-        
         .detail-box { margin-bottom: 15px; }
         .detail-header { font-weight: 700; font-size: 14px; color: var(--text-muted); margin-bottom: 5px; display: flex; align-items: center; }
         .detail-header.lidar { color: var(--accent-green); }
         .detail-header.lane { color: var(--accent-red); }
-        
         .expandable-row { cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: var(--bg-main); margin-top: 3px; border-radius: 4px; font-size: 13px; color: var(--text-main); transition: background 0.3s; border: 1px solid transparent; }
         .expandable-row:hover { background: var(--bg-input); border-color: var(--border-color); }
         .expandable-row i.arrow { transition: transform 0.3s; color: var(--text-muted); }
         .expandable-row.active i.arrow { transform: rotate(180deg); color: var(--accent-blue); }
-        
         .qc-list, .qc-contributions-list { display: none; padding: 5px 10px 5px 20px; background: rgba(0,0,0,0.2); border-left: 2px solid var(--accent-blue); margin-bottom: 5px; border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; max-height: 200px; overflow-y: auto; }
         body.light-mode .qc-list, body.light-mode .qc-contributions-list { background: rgba(0,0,0,0.03); }
         .qc-list::-webkit-scrollbar, .qc-contributions-list::-webkit-scrollbar { width: 5px; }
         .qc-list::-webkit-scrollbar-track, .qc-contributions-list::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 5px; }
         .qc-list::-webkit-scrollbar-thumb, .qc-contributions-list::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 5px; }
-
         .qc-list-item { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         body.light-mode .qc-list-item { border-bottom: 1px solid rgba(0,0,0,0.05); color: #555; }
         .qc-list-item:last-child { border-bottom: none; }
@@ -666,7 +374,7 @@
                 </div>
             </div>
 
-            <!-- Alert Banner for Non-Submitters -->
+            <!-- Alert Banner -->
             <div id="alertBanner" class="alert-banner" style="display: none;">
                 <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
                 <div class="alert-text">
@@ -682,19 +390,16 @@
                     <span class="at-stat-value" id="atTotalUsers">0</span>
                     <span class="at-stat-label">Total Active Users</span>
                 </div>
-
                 <div class="at-stat-card success">
                     <div class="at-stat-icon"><i class="fas fa-clock"></i></div>
                     <span class="at-stat-value" id="atTotalHours">0h</span>
                     <span class="at-stat-label">Total Logged Hours</span>
                 </div>
-
                 <div class="at-stat-card warning">
                     <div class="at-stat-icon"><i class="fas fa-user-slash"></i></div>
                     <span class="at-stat-value" id="atNoSubmission">0</span>
                     <span class="at-stat-label">Active But No Tasks</span>
                 </div>
-
                 <div class="at-stat-card">
                     <div class="at-stat-icon"><i class="fas fa-check-circle"></i></div>
                     <span class="at-stat-value" id="atWithSubmission">0</span>
@@ -702,9 +407,8 @@
                 </div>
             </div>
 
-            <!-- ====== COLLAPSIBLE COMPARISON CONTAINER (NEW) ====== -->
+            <!-- Collapsible Comparison -->
             <div class="comparison-wrapper">
-                <!-- Trigger/Header - Click to Expand/Collapse -->
                 <div class="comparison-trigger" id="comparisonTrigger" onclick="toggleComparison()">
                     <div class="trigger-left">
                         <i class="fas fa-chevron-down trigger-icon"></i>
@@ -717,11 +421,11 @@
                         </div>
                     </div>
                     <div class="trigger-badges">
-                        <span class="trigger-badge badge-danger" id="triggerBadgeNosubmit">
+                        <span class="trigger-badge badge-danger">
                             <i class="fas fa-exclamation-circle"></i>
                             No Submission: <strong id="triggerCountNosubmit">0</strong>
                         </span>
-                        <span class="trigger-badge badge-success" id="triggerBadgeSubmitted">
+                        <span class="trigger-badge badge-success">
                             <i class="fas fa-check-circle"></i>
                             With Submission: <strong id="triggerCountSubmitted">0</strong>
                         </span>
@@ -729,10 +433,7 @@
                     </div>
                 </div>
 
-                <!-- Collapsible Content (Hidden by Default) -->
                 <div class="comparison-content-collapsible" id="comparisonContent">
-                    
-                    <!-- Tabs -->
                     <div class="comparison-tabs">
                         <button class="comparison-tab active" onclick="switchComparisonTab('nosubmit')" id="tabNosubmit">
                             <i class="fas fa-exclamation-circle"></i> No Submission (<span id="countNosubmit">0</span>)
@@ -742,7 +443,6 @@
                         </button>
                     </div>
 
-                    <!-- Tab Content: No Submission -->
                     <div class="comparison-content" id="contentNosubmit" style="display: block;">
                         <div class="tab-header-wrapper">
                             <span class="tab-title-text">Users who are active but did NOT submit tasks</span>
@@ -751,17 +451,8 @@
                             </button>
                         </div>
                         <table class="comparison-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>User Name</th>
-                                    <th>Logged Hours</th>
-                                    <th>Breakdown (C+D)</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbodyNosubmit">
-                            </tbody>
+                            <thead><tr><th>#</th><th>User Name</th><th>Logged Hours</th><th>Breakdown (C+D)</th><th>Status</th></tr></thead>
+                            <tbody id="tbodyNosubmit"></tbody>
                         </table>
                         <div id="noDataNosubmit" class="no-data-message" style="display: none;">
                             <i class="fas fa-check-circle" style="color: var(--accent-green);"></i><br>
@@ -769,7 +460,6 @@
                         </div>
                     </div>
 
-                    <!-- Tab Content: With Submission -->
                     <div class="comparison-content" id="contentSubmitted" style="display: none;">
                         <div class="tab-header-wrapper">
                             <span class="tab-title-text">Users who are active AND submitted tasks</span>
@@ -778,22 +468,11 @@
                             </button>
                         </div>
                         <table class="comparison-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>User Name</th>
-                                    <th>Total Hours</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbodySubmitted">
-                            </tbody>
+                            <thead><tr><th>#</th><th>User Name</th><th>Total Hours</th><th>Status</th></tr></thead>
+                            <tbody id="tbodySubmitted"></tbody>
                         </table>
-                        <div id="noDataSubmitted" class="no-data-message" style="display: none;">
-                            No data available.
-                        </div>
+                        <div id="noDataSubmitted" class="no-data-message" style="display: none;">No data available.</div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -868,21 +547,40 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        // ==========================================
+        // CONFIG
+        // ==========================================
         const API_URL = "https://script.google.com/macros/s/AKfycbzuJ-olxHqLh0zC0T3aQD7CUN4hvE1iBZmvc73UZ0v7GKkQqeYRiwVVMlH03GeCSou3/exec";
-        let currentUser = "";
+        const LS_PREFIX   = 'gt_dash_v2_';   // bump version to bust old cache
+        const REFRESH_MS  = 30000;           // 30s — matches backend 25s cache TTL
+        
+        let currentUser       = "";
         let refreshInterval;
-        let cachedData = {}; 
-        let filterChangeTimeout = null; 
-        let currentFetchId = 0;       
-        let currentFetchContext = "";  
-        let lastTotalTasks = 0;       
+        let cachedData        = {};
+        let filterTimeout     = null;
+        let currentFetchId    = 0;
+        let lastFilterKey     = "";
+        let lastTotalTasks    = 0;
+        let currentComparisonTab = 'nosubmit';
+        let currentActiveTimeData = { noSubmission: [], withSubmission: [], date: '' };
 
-        // Store data for export
-        let currentActiveTimeData = {
-            noSubmission: [],
-            withSubmission: [],
-            date: ''
-        };
+        // ==========================================
+        // localStorage HELPERS
+        // ==========================================
+        function lsKey() {
+            return LS_PREFIX + $('#taskDate').val() + '_' + $('#shiftSelect').val();
+        }
+
+        function lsGet(key) {
+            try { 
+                var raw = localStorage.getItem(key);
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) { return null; }
+        }
+
+        function lsSet(key, obj) {
+            try { localStorage.setItem(key, JSON.stringify(obj)); } catch (e) {}
+        }
 
         // ==========================================
         // NETWORK STATUS
@@ -891,28 +589,27 @@
             if (navigator.onLine) {
                 $('#networkDot').removeClass('offline').addClass('online');
                 $('#networkText').text('Online').removeClass('offline').addClass('online');
-                if (currentUser) fetchStats(false);
+                if (currentUser) fetchAllData();
             } else {
                 $('#networkDot').removeClass('online').addClass('offline');
                 $('#networkText').text('Offline').removeClass('online').addClass('offline');
                 $('#reloadIndicator').fadeOut(200);
             }
         }
-        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('online',  updateOnlineStatus);
         window.addEventListener('offline', updateOnlineStatus);
 
         // ==========================================
-        // THEME TOGGLE
+        // THEME
         // ==========================================
         function initTheme() {
             if (localStorage.getItem('theme') === 'light') {
                 $('body').addClass('light-mode');
                 $('#themeToggleBtn').html('<i class="fas fa-moon"></i>');
-            } else { 
-                $('#themeToggleBtn').html('<i class="fas fa-sun"></i>'); 
+            } else {
+                $('#themeToggleBtn').html('<i class="fas fa-sun"></i>');
             }
         }
-        
         function toggleTheme() {
             $('body').toggleClass('light-mode');
             if ($('body').hasClass('light-mode')) {
@@ -924,12 +621,11 @@
             }
         }
 
-        $(document).ready(function() {
-            initTheme(); 
-            updateOnlineStatus(); 
+        $(document).ready(function () {
+            initTheme();
+            updateOnlineStatus();
             const today = new Date();
-            const dateStr = today.toISOString().split('T')[0];
-            $('#taskDate').val(dateStr);
+            $('#taskDate').val(today.toISOString().split('T')[0]);
             $('#dynamicShiftTitle').text('Total Tasks for the ' + $('#shiftSelect').val());
         });
 
@@ -939,109 +635,133 @@
         }
 
         // ==========================================
-        // LOGIN FUNCTION
+        // LOGIN
         // ==========================================
         function attemptLogin() {
             if (!navigator.onLine) { alert("You are offline. Please check your internet connection."); return; }
             const user = $('#username').val().trim();
             const pass = $('#password').val().trim();
-            if(!user || !pass) return;
+            if (!user || !pass) return;
 
             showLoading(true);
-            const loginUrl = `${API_URL}?action=login&username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`;
-            
-            fetch(loginUrl)
-                .then(response => response.json())
+
+            fetch(`${API_URL}?action=login&username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`)
+                .then(r => r.json())
                 .then(response => {
+                    showLoading(false);
                     if (response.success) {
                         currentUser = response.username;
-                        showLoading(false);
                         $('#loginSection').hide();
                         $('#dashboardSection').show();
                         $('#userNameDisplay').text(currentUser);
-                        
-                        lastTotalTasks = 0; 
-                        $('#reloadIndicator').fadeIn(200);
-                        $('.main-stats, .unit-section, .summary-section, .achievers-banner, .active-time-section').addClass('fetching-data');
-                        
-                        fetchStats(false); 
+                        lastTotalTasks = 0;
+
+                        // ⚡ Show cached data instantly if available, then refresh
+                        const cached = lsGet(lsKey());
+                        if (cached) {
+                            renderDashboard(cached.stats);
+                            if (cached.activeTime && !cached.activeTime.error) renderActiveTimeAnalysis(cached.activeTime);
+                        } else {
+                            $('#reloadIndicator').fadeIn(200);
+                        }
+
+                        fetchAllData();
                         clearInterval(refreshInterval);
-                        refreshInterval = setInterval(() => fetchStats(false), 5000); 
+                        refreshInterval = setInterval(() => fetchAllData(true), REFRESH_MS);
                     } else {
-                        showLoading(false); 
                         $('#loginError').fadeIn().delay(3000).fadeOut();
                     }
                 })
-                .catch(error => { 
-                    showLoading(false); console.error("Login Error:", error);
-                    if(!navigator.onLine) updateOnlineStatus();
+                .catch(err => {
+                    showLoading(false);
+                    console.error("Login Error:", err);
+                    if (!navigator.onLine) updateOnlineStatus();
                 });
         }
 
         // ==========================================
-        // FILTER CHANGE HANDLER
+        // FILTER CHANGE
         // ==========================================
         function handleFilterChange() {
-            if (!navigator.onLine) { alert("You are offline. Reconnect to change filters."); return; }
-            $('#reloadIndicator').fadeIn(200);
-            $('.main-stats, .unit-section, .summary-section, .achievers-banner, .active-time-section').addClass('fetching-data');
+            if (!navigator.onLine) { alert("You are offline."); return; }
             $('#dynamicShiftTitle').text('Total Tasks for the ' + $('#shiftSelect').val());
-            
-            if (filterChangeTimeout) clearTimeout(filterChangeTimeout);
-            filterChangeTimeout = setTimeout(function() { 
-                fetchStats(false); 
-                fetchActiveTimeAnalysis();
-            }, 300);
+
+            // ⚡ Show cached data for this new filter instantly
+            const cached = lsGet(lsKey());
+            if (cached) {
+                lastTotalTasks = 0;
+                renderDashboard(cached.stats);
+                if (cached.activeTime && !cached.activeTime.error) renderActiveTimeAnalysis(cached.activeTime);
+            } else {
+                // No cache — show loading indicator only if no cached data
+                $('#reloadIndicator').fadeIn(200);
+            }
+
+            if (filterTimeout) clearTimeout(filterTimeout);
+            filterTimeout = setTimeout(() => fetchAllData(), 200);
         }
 
         // ==========================================
-        // FETCH STATS (Original)
+        // ⭐ MAIN FETCH — SINGLE COMBINED API CALL
         // ==========================================
-        function fetchStats(isInitialLoad = false) {
-            if(!currentUser || !$('#dashboardSection').is(':visible') || !navigator.onLine) return;
-            const rawDate = $('#taskDate').val(); 
-            const shift   = $('#shiftSelect').val();
-            if(!rawDate) return;
+        function fetchAllData(isSilent = false) {
+            if (!currentUser || !$('#dashboardSection').is(':visible') || !navigator.onLine) return;
 
-            const fetchId = ++currentFetchId;
-            const fetchContext = rawDate + "_" + shift;
-            const statsUrl = `${API_URL}?action=getStats&date=${encodeURIComponent(rawDate)}&shift=${encodeURIComponent(shift)}`;
+            const date  = $('#taskDate').val();
+            const shift = $('#shiftSelect').val();
+            if (!date) return;
 
-            fetch(statsUrl)
-                .then(response => response.json())
+            const fetchId    = ++currentFetchId;
+            const filterKey  = date + '_' + shift;
+
+            // Silent refresh: show spinner in header only (no dim)
+            if (isSilent) {
+                $('#reloadIndicator').fadeIn(200);
+            }
+
+            const url = `${API_URL}?action=getAllData&date=${encodeURIComponent(date)}&shift=${encodeURIComponent(shift)}`;
+
+            fetch(url)
+                .then(r => r.json())
                 .then(response => {
-                    if (fetchId !== currentFetchId) return;
+                    if (fetchId !== currentFetchId) return; // stale response — ignore
 
-                    if (isInitialLoad) showLoading(false);
-                    $('.main-stats, .unit-section, .summary-section, .achievers-banner, .active-time-section').removeClass('fetching-data');
                     $('#reloadIndicator').fadeOut(200);
 
-                    if (response.success) {
-                        if (currentFetchContext !== fetchContext) {
-                            currentFetchContext = fetchContext;
-                            lastTotalTasks = 0;
-                        }
-
-                        const newTotal = response.data.totalTasks;
-                        if (newTotal < lastTotalTasks) return; 
-                        
-                        lastTotalTasks = newTotal;
-                        cachedData = response.data; 
-                        renderDashboard(response.data);
+                    if (!response.success) {
+                        console.error("API error:", response.message);
+                        return;
                     }
+
+                    const stats    = response.stats;
+                    const atData   = response.activeTime;
+
+                    // Guard: don't let total go backwards (deduplication race)
+                    if (filterKey !== lastFilterKey) {
+                        lastFilterKey  = filterKey;
+                        lastTotalTasks = 0;
+                    }
+                    if (stats.totalTasks < lastTotalTasks) return;
+                    lastTotalTasks = stats.totalTasks;
+
+                    // 💾 Save to localStorage for instant display next time
+                    lsSet(lsKey(), { stats: stats, activeTime: atData, ts: Date.now() });
+                    cachedData = stats;
+
+                    // Render everything
+                    renderDashboard(stats);
+                    if (atData && !atData.error) renderActiveTimeAnalysis(atData);
                 })
-                .catch(error => {
+                .catch(err => {
                     if (fetchId !== currentFetchId) return;
-                    if (isInitialLoad) showLoading(false);
-                    $('.main-stats, .unit-section, .summary-section, .achievers-banner, .active-time-section').removeClass('fetching-data');
                     $('#reloadIndicator').fadeOut(200);
-                    console.error("Fetch Stats Error:", error);
-                    updateOnlineStatus(); 
+                    console.error("Fetch error:", err);
+                    updateOnlineStatus();
                 });
         }
 
         // ==========================================
-        // RENDER DASHBOARD (Original)
+        // RENDER DASHBOARD
         // ==========================================
         function renderDashboard(data) {
             $('#dynamicShiftTitle').text('Total Tasks for the ' + $('#shiftSelect').val());
@@ -1052,7 +772,7 @@
             $('#laneQa').text(data.laneQa);
 
             // Shift Top Achiever
-            if(data.topShiftAchiever && data.topShiftAchiever.name !== "-") {
+            if (data.topShiftAchiever && data.topShiftAchiever.name !== "-") {
                 $('#shiftTopName').text(data.topShiftAchiever.name);
                 $('#shiftTopTasks').html(`
                     <span class="achiever-score-main">${data.topShiftAchiever.tasks} Tasks</span>
@@ -1067,7 +787,7 @@
             }
 
             // Daily Top Achiever
-            if(data.topDailyAchiever && data.topDailyAchiever.name !== "-") {
+            if (data.topDailyAchiever && data.topDailyAchiever.name !== "-") {
                 $('#dailyTopName').text(data.topDailyAchiever.name);
                 $('#dailyTopTasks').html(`
                     <span class="achiever-score-main">${data.topDailyAchiever.tasks} Tasks</span>
@@ -1084,96 +804,54 @@
             // Unit Details
             let unitHtml = '';
             const units = data.byUnit;
-            if(Object.keys(units).length > 0){
-                const sortedUnits = Object.keys(units).sort((a,b) => units[b].total - units[a].total);
-                for (let key of sortedUnits) {
+            if (Object.keys(units).length > 0) {
+                Object.keys(units).sort((a, b) => units[b].total - units[a].total).forEach(key => {
                     unitHtml += `
                         <div class="unit-row" onclick="openModal('${key}')">
                             <span class="unit-name"><i class="fas fa-door-open" style="margin-right:8px; color:var(--text-muted)"></i> ${key}</span>
                             <span class="unit-count">${units[key].total} Tasks</span>
                         </div>
                     `;
-                }
-            } else { unitHtml = '<div class="unit-row">No data for this shift yet</div>'; }
+                });
+            } else {
+                unitHtml = '<div class="unit-row">No data for this shift yet</div>';
+            }
             $('#unitDetails').html(unitHtml);
 
             // Daily Summary
-            if(data.dailySummary) {
-                $('#dailyTotalTasks').text(data.dailySummary.total);
-                $('#sumMornTotal').text(data.dailySummary.morning.total);
-                $('#sumMornLidarFp').text(data.dailySummary.morning.lidarFp);
-                $('#sumMornLidarQa').text(data.dailySummary.morning.lidarQa);
-                $('#sumMornLaneFp').text(data.dailySummary.morning.laneFp);
-                $('#sumMornLaneQa').text(data.dailySummary.morning.laneQa);
-
-                $('#sumNightTotal').text(data.dailySummary.night.total);
-                $('#sumNightLidarFp').text(data.dailySummary.night.lidarFp);
-                $('#sumNightLidarQa').text(data.dailySummary.night.lidarQa);
-                $('#sumNightLaneFp').text(data.dailySummary.night.laneFp);
-                $('#sumNightLaneQa').text(data.dailySummary.night.laneQa);
-
-                $('#sumOverTotal').text(data.dailySummary.overnight.total);
-                $('#sumOverLidarFp').text(data.dailySummary.overnight.lidarFp);
-                $('#sumOverLidarQa').text(data.dailySummary.overnight.lidarQa);
-                $('#sumOverLaneFp').text(data.dailySummary.overnight.laneFp);
-                $('#sumOverLaneQa').text(data.dailySummary.overnight.laneQa);
+            if (data.dailySummary) {
+                const ds = data.dailySummary;
+                $('#dailyTotalTasks').text(ds.total);
+                $('#sumMornTotal').text(ds.morning.total);   $('#sumMornLidarFp').text(ds.morning.lidarFp);
+                $('#sumMornLidarQa').text(ds.morning.lidarQa); $('#sumMornLaneFp').text(ds.morning.laneFp);
+                $('#sumMornLaneQa').text(ds.morning.laneQa);
+                $('#sumNightTotal').text(ds.night.total);    $('#sumNightLidarFp').text(ds.night.lidarFp);
+                $('#sumNightLidarQa').text(ds.night.lidarQa); $('#sumNightLaneFp').text(ds.night.laneFp);
+                $('#sumNightLaneQa').text(ds.night.laneQa);
+                $('#sumOverTotal').text(ds.overnight.total); $('#sumOverLidarFp').text(ds.overnight.lidarFp);
+                $('#sumOverLidarQa').text(ds.overnight.lidarQa); $('#sumOverLaneFp').text(ds.overnight.laneFp);
+                $('#sumOverLaneQa').text(ds.overnight.laneQa);
             }
         }
 
         // ==========================================
-        // 🆕 ACTIVE TIME ANALYSIS FUNCTIONS
+        // RENDER ACTIVE TIME ANALYSIS
         // ==========================================
-        let currentComparisonTab = 'nosubmit';
-
-        function fetchActiveTimeAnalysis() {
-            if(!currentUser || !$('#dashboardSection').is(':visible') || !navigator.onLine) return;
-            
-            const rawDate = $('#taskDate').val();
-            if(!rawDate) return;
-
-            console.log("🔍 Fetching Active Time Analysis for:", rawDate);
-            $('#atLoadingIndicator').fadeIn(200);
-            
-            const analysisUrl = `${API_URL}?action=getActiveTimeAnalysis&date=${encodeURIComponent(rawDate)}`;
-            
-            fetch(analysisUrl)
-                .then(response => response.json())
-                .then(response => {
-                    $('#atLoadingIndicator').fadeOut(200);
-                    console.log("📊 Active Time Response:", response);
-                    
-                    if (response.success) {
-                        renderActiveTimeAnalysis(response.data);
-                    } else {
-                        console.error("❌ API Error:", response.message);
-                        alert("⚠️ Error fetching Active Time: " + response.message);
-                    }
-                })
-                .catch(error => {
-                    $('#atLoadingIndicator').fadeOut(200);
-                    console.error("🚨 Fetch Error:", error);
-                });
-        }
-
         function renderActiveTimeAnalysis(data) {
-            // Store for export
-            currentActiveTimeData.date = $('#taskDate').val();
-            currentActiveTimeData.noSubmission = data.usersWithNoSubmission || [];
-            currentActiveTimeData.withSubmission = data.usersWithSubmission || [];
+            currentActiveTimeData.date           = $('#taskDate').val();
+            currentActiveTimeData.noSubmission   = data.usersWithNoSubmission  || [];
+            currentActiveTimeData.withSubmission = data.usersWithSubmission    || [];
 
-            // Update Stats Cards
             $('#atTotalUsers').text(data.totalActiveUsers);
             $('#atTotalHours').text(data.totalHours + 'h');
             $('#atNoSubmission').text(data.usersWithNoSubmission.length);
             $('#atWithSubmission').text(data.usersWithSubmission.length);
 
-            // Update Trigger Badges
             $('#triggerCountNosubmit').text(data.usersWithNoSubmission.length);
             $('#triggerCountSubmitted').text(data.usersWithSubmission.length);
             $('#countNosubmit').text(data.usersWithNoSubmission.length);
             $('#countSubmitted').text(data.usersWithSubmission.length);
 
-            // Show/Hide Alert Banner
             if (data.usersWithNoSubmission.length > 0) {
                 $('#alertBanner').fadeIn(300);
                 $('#alertTitle').html(`⚠️ ${data.usersWithNoSubmission.length} User(s) Active But No Tasks Submitted`);
@@ -1182,42 +860,35 @@
                 $('#alertBanner').fadeOut(200);
             }
 
-            // Render "No Submission" Table
-            const tbodyNosubmit = $('#tbodyNosubmit');
-            tbodyNosubmit.empty();
-            
+            // No Submission table
+            const tbodyNo = $('#tbodyNosubmit');
+            tbodyNo.empty();
             if (data.usersWithNoSubmission.length > 0) {
                 $('#noDataNosubmit').hide();
-                
-                data.usersWithNoSubmission.forEach((user, index) => {
-                    tbodyNosubmit.append(`
+                data.usersWithNoSubmission.forEach((user, i) => {
+                    tbodyNo.append(`
                         <tr>
-                            <td><strong>${index + 1}</strong></td>
+                            <td><strong>${i + 1}</strong></td>
                             <td><strong style="color: var(--text-main);">${user.name}</strong></td>
                             <td><span class="hours-value">${user.hours}h</span></td>
-                            <td style="font-size: 12px; color: var(--text-muted);">
-                                C: ${user.hoursC}h + D: ${user.hoursD}h
-                            </td>
+                            <td style="font-size: 12px; color: var(--text-muted);">C: ${user.hoursC}h + D: ${user.hoursD}h</td>
                             <td><span class="user-status-badge status-danger">NO SUBMISSION</span></td>
                         </tr>
                     `);
                 });
             } else {
-                tbodyNosubmit.empty();
                 $('#noDataNosubmit').show();
             }
 
-            // Render "With Submission" Table
-            const tbodySubmitted = $('#tbodySubmitted');
-            tbodySubmitted.empty();
-            
+            // With Submission table
+            const tbodySub = $('#tbodySubmitted');
+            tbodySub.empty();
             if (data.usersWithSubmission.length > 0) {
                 $('#noDataSubmitted').hide();
-                
-                data.usersWithSubmission.forEach((user, index) => {
-                    tbodySubmitted.append(`
+                data.usersWithSubmission.forEach((user, i) => {
+                    tbodySub.append(`
                         <tr>
-                            <td><strong>${index + 1}</strong></td>
+                            <td><strong>${i + 1}</strong></td>
                             <td><strong style="color: var(--text-main);">${user.name}</strong></td>
                             <td><span class="hours-value" style="color: var(--accent-green);">${user.hours}h</span></td>
                             <td><span class="user-status-badge status-success">✓ SUBMITTED</span></td>
@@ -1225,26 +896,20 @@
                     `);
                 });
             } else {
-                tbodySubmitted.empty();
                 $('#noDataSubmitted').show();
             }
         }
 
         // ==========================================
-        // 🆕 COLLAPSE/EXPAND FUNCTIONALITY
+        // COLLAPSIBLE & TABS
         // ==========================================
         function toggleComparison() {
-            const trigger = document.getElementById('comparisonTrigger');
-            const content = document.getElementById('comparisonContent');
-            
-            trigger.classList.toggle('active');
-            content.classList.toggle('expanded');
+            $('#comparisonTrigger').toggleClass('active');
+            $('#comparisonContent').toggleClass('expanded');
         }
 
         function switchComparisonTab(tabName) {
             currentComparisonTab = tabName;
-            
-            // Update tab styles
             $('.comparison-tab').removeClass('active');
             if (tabName === 'nosubmit') {
                 $('#tabNosubmit').addClass('active');
@@ -1258,108 +923,77 @@
         }
 
         // ==========================================
-        // 🆕 EXPORT TO EXCEL FUNCTION
+        // EXPORT TO CSV/EXCEL
         // ==========================================
         function exportToExcel(type) {
-            let dataToExport;
-            let filename;
-            let headers;
+            const isNo = type === 'nosubmit';
+            const data = isNo ? currentActiveTimeData.noSubmission : currentActiveTimeData.withSubmission;
 
-            if (type === 'nosubmit') {
-                dataToExport = currentActiveTimeData.noSubmission;
-                filename = `No_Submission_Users_${currentActiveTimeData.date}.csv`;
-                headers = ['#', 'User Name', 'Logged Hours (Total)', 'Hours C (Interact)', 'Hours D (Overhead)', 'Status'];
-            } else {
-                dataToExport = currentActiveTimeData.withSubmission;
-                filename = `With_Submission_Users_${currentActiveTimeData.date}.csv`;
-                headers = ['#', 'User Name', 'Total Logged Hours', 'Status'];
-            }
+            if (!data || data.length === 0) { alert('No data to export!'); return; }
 
-            if (!dataToExport || dataToExport.length === 0) {
-                alert('No data to export!');
-                return;
-            }
+            const headers = isNo
+                ? ['#', 'User Name', 'Logged Hours (Total)', 'Hours C (Interact)', 'Hours D (Overhead)', 'Status']
+                : ['#', 'User Name', 'Total Logged Hours', 'Status'];
 
-            // Build CSV content
-            let csvContent = headers.join(',') + '\n';
-            
-            dataToExport.forEach((user, index) => {
-                if (type === 'nosubmit') {
-                    csvContent += `${index + 1},"${user.name}",${user.hours},${user.hoursC},${user.hoursD},"NO SUBMISSION"\n`;
-                } else {
-                    csvContent += `${index + 1},"${user.name}",${user.hours},"SUBMITTED"\n`;
-                }
+            let csv = headers.join(',') + '\n';
+            data.forEach((user, i) => {
+                csv += isNo
+                    ? `${i+1},"${user.name}",${user.hours},${user.hoursC},${user.hoursD},"NO SUBMISSION"\n`
+                    : `${i+1},"${user.name}",${user.hours},"SUBMITTED"\n`;
             });
 
-            // Create and download file
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const filename = (isNo ? 'No_Submission_' : 'With_Submission_') + currentActiveTimeData.date + '.csv';
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            const url = URL.createObjectURL(blob);
-            
-            link.setAttribute('href', url);
-            link.setAttribute('download', filename);
-            link.style.visibility = 'hidden';
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
 
-            // Show success message
-            console.log(`📥 Exported ${dataToExport.length} records to ${filename}`);
-            
-            // Visual feedback
             const btn = event.target.closest('.export-btn');
-            const originalText = btn.innerHTML;
+            const orig = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-check"></i> Done!';
-            btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-            }, 2000);
+            setTimeout(() => { btn.innerHTML = orig; }, 2000);
         }
 
         // ==========================================
-        // MODAL & UNIT DETAILS (Original)
+        // UNIT MODAL
         // ==========================================
         function generateQcListHtml(qcObj) {
-            if (!qcObj || Object.keys(qcObj).length === 0) return '<div class="qc-list-item"><span>No data</span></div>';
-            let html = '';
-            const sortedQcs = Object.keys(qcObj).sort((a,b) => qcObj[b] - qcObj[a]);
-            for(let qc of sortedQcs) {
-                html += `<div class="qc-list-item"><span>${qc}</span><strong>${qcObj[qc]}</strong></div>`;
-            }
-            return html;
+            if (!qcObj || Object.keys(qcObj).length === 0)
+                return '<div class="qc-list-item"><span>No data</span></div>';
+            return Object.keys(qcObj).sort((a, b) => qcObj[b] - qcObj[a])
+                .map(qc => `<div class="qc-list-item"><span>${qc}</span><strong>${qcObj[qc]}</strong></div>`)
+                .join('');
         }
 
         function openModal(unitName) {
-            const unitData = cachedData.byUnit[unitName];
-            if(!unitData) return;
+            const unitData = cachedData.byUnit && cachedData.byUnit[unitName];
+            if (!unitData) return;
             $('#modalTitle').text(unitName);
-            
+
             let bodyHtml = `
                 <div class="detail-box">
                     <div class="detail-header lidar"><i class="fas fa-circle" style="font-size:8px; margin-right:5px;"></i> LIDAR</div>
-                    
                     <div class="expandable-row" onclick="$(this).next('.qc-list').slideToggle(200); $(this).toggleClass('active');">
                         <span>FP Tasks <i class="fas fa-chevron-down arrow" style="font-size:10px; margin-left:5px;"></i></span>
                         <strong>${unitData.lidarFp}</strong>
                     </div>
                     <div class="qc-list">${generateQcListHtml(unitData.lidarFpQcs)}</div>
-
                     <div class="expandable-row" onclick="$(this).next('.qc-list').slideToggle(200); $(this).toggleClass('active');">
                         <span>QA Tasks <i class="fas fa-chevron-down arrow" style="font-size:10px; margin-left:5px;"></i></span>
                         <strong>${unitData.lidarQa}</strong>
                     </div>
                     <div class="qc-list">${generateQcListHtml(unitData.lidarQaQcs)}</div>
                 </div>
-
                 <div class="detail-box" style="margin-bottom:0;">
                     <div class="detail-header lane"><i class="fas fa-circle" style="font-size:8px; margin-right:5px;"></i> Lane Line</div>
-                    
                     <div class="expandable-row" onclick="$(this).next('.qc-list').slideToggle(200); $(this).toggleClass('active');">
                         <span>FP Tasks <i class="fas fa-chevron-down arrow" style="font-size:10px; margin-left:5px;"></i></span>
                         <strong>${unitData.laneFp}</strong>
                     </div>
                     <div class="qc-list">${generateQcListHtml(unitData.laneFpQcs)}</div>
-
                     <div class="expandable-row" onclick="$(this).next('.qc-list').slideToggle(200); $(this).toggleClass('active');">
                         <span>QA Tasks <i class="fas fa-chevron-down arrow" style="font-size:10px; margin-left:5px;"></i></span>
                         <strong>${unitData.laneQa}</strong>
@@ -1368,53 +1002,46 @@
                 </div>
             `;
 
-            // QC Contributions Calculation
             let qcTotals = {};
-            
-            function aggregateQcData(obj, type) {
-                if(!obj) return;
-                for(let qc in obj) {
-                    if(!qcTotals[qc]) qcTotals[qc] = { total: 0, lidar: 0, lane: 0 };
+            function agg(obj, type) {
+                if (!obj) return;
+                for (let qc in obj) {
+                    if (!qcTotals[qc]) qcTotals[qc] = { total: 0, lidar: 0, lane: 0 };
                     qcTotals[qc].total += obj[qc];
-                    if(type === 'lidar') qcTotals[qc].lidar += obj[qc];
-                    if(type === 'lane') qcTotals[qc].lane += obj[qc];
+                    if (type === 'lidar') qcTotals[qc].lidar += obj[qc];
+                    if (type === 'lane')  qcTotals[qc].lane  += obj[qc];
                 }
             }
+            agg(unitData.lidarFpQcs, 'lidar'); agg(unitData.lidarQaQcs, 'lidar');
+            agg(unitData.laneFpQcs,  'lane');  agg(unitData.laneQaQcs,  'lane');
 
-            aggregateQcData(unitData.lidarFpQcs, 'lidar');
-            aggregateQcData(unitData.lidarQaQcs, 'lidar');
-            aggregateQcData(unitData.laneFpQcs, 'lane');
-            aggregateQcData(unitData.laneQaQcs, 'lane');
-
-            let qcsCount = Object.keys(qcTotals).length;
-            
-            if(qcsCount > 0) {
-                bodyHtml += `<div class="detail-box" style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">
-                                <div class="expandable-row" onclick="$(this).next('.qc-contributions-list').slideToggle(200); $(this).toggleClass('active');" style="border-left: 3px solid var(--accent-blue);">
-                                    <span style="color:var(--accent-blue); font-weight:bold;">
-                                        <i class="fas fa-users" style="margin-right:5px;"></i> QC Contributions 
-                                        <i class="fas fa-chevron-down arrow" style="font-size:10px; margin-left:5px;"></i>
-                                    </span>
-                                    <strong style="color:var(--accent-blue)">${qcsCount} QCs</strong>
-                                </div>
-                                <div class="qc-contributions-list" style="display: none; margin-top: 8px; padding-left: 5px;">`;
-                
-                const sortedQcs = Object.keys(qcTotals).sort((a,b) => qcTotals[b].total - qcTotals[a].total);
-                
-                for(let qc of sortedQcs) {
-                    let qData = qcTotals[qc];
+            const qcsCount = Object.keys(qcTotals).length;
+            if (qcsCount > 0) {
+                bodyHtml += `
+                    <div class="detail-box" style="margin-top:20px; border-top:1px solid var(--border-color); padding-top:15px;">
+                        <div class="expandable-row" onclick="$(this).next('.qc-contributions-list').slideToggle(200); $(this).toggleClass('active');" style="border-left:3px solid var(--accent-blue);">
+                            <span style="color:var(--accent-blue); font-weight:bold;">
+                                <i class="fas fa-users" style="margin-right:5px;"></i> QC Contributions
+                                <i class="fas fa-chevron-down arrow" style="font-size:10px; margin-left:5px;"></i>
+                            </span>
+                            <strong style="color:var(--accent-blue)">${qcsCount} QCs</strong>
+                        </div>
+                        <div class="qc-contributions-list" style="display:none; margin-top:8px; padding-left:5px;">
+                `;
+                Object.keys(qcTotals).sort((a, b) => qcTotals[b].total - qcTotals[a].total).forEach(qc => {
+                    const d = qcTotals[qc];
                     bodyHtml += `
-                        <div class="detail-row" style="border-left: 2px solid var(--border-color); display:flex; flex-direction:column; gap:4px; padding:8px 10px; margin-bottom: 5px; background: rgba(0,0,0,0.1);">
+                        <div style="border-left:2px solid var(--border-color); display:flex; flex-direction:column; gap:4px; padding:8px 10px; margin-bottom:5px; background:rgba(0,0,0,0.1);">
                             <div style="display:flex; justify-content:space-between; width:100%;">
                                 <span style="font-weight:500;">${qc}</span>
-                                <strong style="color:var(--text-main)">${qData.total}</strong>
+                                <strong>${d.total}</strong>
                             </div>
-                            <div style="display:flex; justify-content:flex-start; gap:10px; font-size:11px; color:var(--text-muted);">
-                                <span><i class="fas fa-circle" style="color:var(--accent-green); font-size:6px;"></i> Lidar: ${qData.lidar}</span>
-                                <span><i class="fas fa-circle" style="color:var(--accent-red); font-size:6px;"></i> Lane: ${qData.lane}</span>
+                            <div style="display:flex; gap:10px; font-size:11px; color:var(--text-muted);">
+                                <span><i class="fas fa-circle" style="color:var(--accent-green); font-size:6px;"></i> Lidar: ${d.lidar}</span>
+                                <span><i class="fas fa-circle" style="color:var(--accent-red); font-size:6px;"></i> Lane: ${d.lane}</span>
                             </div>
                         </div>`;
-                }
+                });
                 bodyHtml += `</div></div>`;
             }
 
@@ -1422,10 +1049,10 @@
             $('#unitModal').css('display', 'flex').hide().fadeIn(200);
         }
 
-        function closeModal(e) { if(!e || e.target.id === 'unitModal') $('#unitModal').fadeOut(200); }
-        function showLoading(show) { if(show) $('#loading').css('display', 'flex'); else $('#loading').css('display', 'none'); }
+        function closeModal(e) { if (!e || e.target.id === 'unitModal') $('#unitModal').fadeOut(200); }
+        function showLoading(show) { $('#loading').css('display', show ? 'flex' : 'none'); }
         function logout() { clearInterval(refreshInterval); location.reload(); }
-        $('#password').keypress(function(e) { if(e.which == 13) attemptLogin(); });
+        $('#password').keypress(function (e) { if (e.which === 13) attemptLogin(); });
     </script>
 </body>
 </html>
