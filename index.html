@@ -6,7 +6,7 @@
     <title>GT Mangers Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
+
     <style>
         * { box-sizing: border-box; }
         html, body { max-width: 100%; overflow-x: hidden; transition: background-color 0.3s, color 0.3s; }
@@ -21,6 +21,8 @@
             --accent-green: #81c995;
             --accent-red: #f28b82;
             --accent-gold: #fbbc04;    
+            --accent-purple: #c58af9;
+            --accent-cyan: #78d9ec;
             --border-color: #3c4043;
         }
 
@@ -35,10 +37,12 @@
             --accent-green: #1e8e3e;
             --accent-red: #d93025;
             --accent-gold: #f9ab00;    
+            --accent-purple: #9334e6;
+            --accent-cyan: #00acc1;
         }
 
         body { font-family: 'Roboto', sans-serif; background-color: var(--bg-main); margin: 0; padding: 15px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; color: var(--text-main); }
-        
+
         .login-container { background: var(--bg-card); padding: 40px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); width: 100%; max-width: 380px; text-align: center; border: 1px solid var(--border-color); margin-top: 10vh; transition: all 0.3s; }
         .login-container h2 { margin-bottom: 20px; color: var(--text-main); }
         .login-container input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid var(--border-color); border-radius: 5px; font-size: 14px; background: var(--bg-input); color: var(--text-main); transition: all 0.3s; }
@@ -48,11 +52,11 @@
         .error-msg { color: var(--accent-red); font-size: 13px; margin-top: 10px; display: none; }
 
         .dashboard-container { width: 100%; max-width: 1100px; background: var(--bg-card); border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); padding: 25px; display: none; border: 1px solid var(--border-color); transition: all 0.3s; }
-        
+
         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; transition: all 0.3s; }
         .header h2 { color: var(--text-main); margin: 0; display: flex; align-items: center; gap: 10px; }
         .header-right { display: flex; align-items: center; gap: 10px; }
-        
+
         .theme-toggle-btn { background: transparent; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; padding: 5px 10px; transition: color 0.3s; }
         .theme-toggle-btn:hover { color: var(--accent-gold); }
 
@@ -62,12 +66,12 @@
         .welcome-container { display: flex; flex-direction: column; align-items: flex-end; margin-right: 10px; }
         .welcome-text { color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
         .user-name-display { font-size: 22px; font-weight: 700; background: linear-gradient(90deg, var(--accent-blue), var(--accent-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
+
         .filter-bar { margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-end; background: var(--bg-main); padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); flex-wrap: wrap; transition: all 0.3s; }
         .filter-group { display: flex; flex-direction: column; flex: 1; min-width: 140px; }
         .filter-group label { font-size: 12px; color: var(--text-muted); margin-bottom: 5px; }
         .filter-select, .date-picker { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 5px; font-family: 'Roboto'; cursor: pointer; background: var(--bg-input); color: var(--text-main); transition: all 0.3s; }
-        
+
         .status-indicator { font-size: 12px; color: var(--text-muted); margin-left: auto; display: flex; align-items: center; gap: 8px; width: auto; font-weight: 500; }
         .status-dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 2px; }
         .status-dot.online { background-color: var(--accent-green); animation: pulse 2s infinite; }
@@ -75,7 +79,7 @@
         .network-text.online { color: var(--accent-green); }
         .network-text.offline { color: var(--accent-red); }
         @keyframes pulse { 0% { opacity: 1; box-shadow: 0 0 0 0 rgba(129, 201, 149, 0.4); } 70% { opacity: 0.5; box-shadow: 0 0 0 6px rgba(129, 201, 149, 0); } 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(129, 201, 149, 0); } }
-        
+
         .reload-indicator { display: inline-flex; align-items: center; gap: 5px; color: var(--accent-blue); font-size: 12px; background: rgba(138, 180, 248, 0.1); padding: 4px 8px; border-radius: 20px; transition: opacity 0.3s; }
         .reload-indicator i { animation: spin 1s linear infinite; font-size: 10px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -91,7 +95,7 @@
         .achiever-icon { font-size: 30px; }
         .achiever-card.shift .achiever-icon { color: var(--accent-blue); }
         .achiever-card.daily .achiever-icon { color: var(--accent-gold); }
-        
+
         .achiever-info { display: flex; flex-direction: column; width: 100%; }
         .achiever-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
         .achiever-name { font-size: 18px; font-weight: 700; color: var(--text-main); }
@@ -118,6 +122,149 @@
         .unit-row:hover { background: var(--bg-input); border-color: var(--accent-blue); transform: translateX(5px); }
         .unit-name { font-weight: 500; color: var(--text-main); font-size: 18px; }
         .unit-count { font-weight: 700; color: var(--accent-blue); font-size: 22px; }
+
+        /* ====== QUEUE NAME BREAKDOWN SECTION ====== */
+        .queue-section {
+            background: var(--bg-main);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .queue-header {
+            background: rgba(197, 138, 249, 0.08);
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+            border-bottom: 1px solid transparent;
+        }
+        .queue-header:hover { background: rgba(197, 138, 249, 0.15); }
+        .queue-header.active { border-bottom-color: var(--border-color); }
+        .queue-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: var(--accent-purple);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .queue-header h3 i { font-size: 18px; }
+        .queue-badge {
+            background: var(--accent-purple);
+            color: #fff;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        body:not(.light-mode) .queue-badge { color: #000; }
+        .queue-content {
+            padding: 20px;
+            display: none;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+        }
+        .queue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+        .queue-card {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .queue-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            border-color: var(--accent-purple);
+        }
+        .queue-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-purple);
+            opacity: 0.6;
+        }
+        .queue-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding-left: 8px;
+        }
+        .queue-card-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            word-break: break-word;
+            line-height: 1.3;
+            flex: 1;
+            padding-right: 8px;
+        }
+        .queue-card-total {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent-purple);
+            white-space: nowrap;
+        }
+        .queue-card-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            padding-left: 8px;
+        }
+        .queue-break-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 8px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        body.light-mode .queue-break-item { background: rgba(0,0,0,0.03); }
+        .queue-break-label {
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .queue-break-label i { font-size: 8px; }
+        .queue-break-value {
+            font-weight: 700;
+        }
+        .queue-break-lidar-fp .queue-break-value { color: var(--accent-green); }
+        .queue-break-lidar-qa .queue-break-value { color: #4caf50; }
+        .queue-break-lane-fp .queue-break-value { color: var(--accent-red); }
+        .queue-break-lane-qa .queue-break-value { color: #ff7043; }
+        .queue-no-data {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        .queue-no-data i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--accent-purple);
+            opacity: 0.5;
+        }
 
         /* ====== SUMMARY SECTION ====== */
         .summary-section { background: var(--bg-main); border-radius: 8px; border: 1px solid var(--accent-gold); overflow: hidden; transition: all 0.3s; }
@@ -242,6 +389,7 @@
             .active-time-grid { grid-template-columns: 1fr 1fr; }
             .comparison-tabs { flex-direction: column; }
             .trigger-badges { flex-direction: column; gap: 5px; }
+            .queue-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 600px) {    
             body { padding: 10px; }
@@ -256,8 +404,10 @@
             .active-time-grid { grid-template-columns: 1fr; }
             .comparison-trigger { flex-direction: column; text-align: center; gap: 10px; }
             .trigger-left { flex-direction: column; }
+            .queue-grid { grid-template-columns: 1fr; }
         }
     </style>
+<base target="_blank">
 </head>
 <body>
 
@@ -342,7 +492,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="achiever-card daily">
                 <div class="achiever-icon"><i class="fas fa-crown"></i></div>
                 <div class="achiever-info">
@@ -501,6 +651,27 @@
             <div id="unitDetails"></div>
         </div>
 
+        <!-- ==================== QUEUE NAME BREAKDOWN SECTION ==================== -->
+        <div class="queue-section">
+            <div class="queue-header" id="queueHeader" onclick="toggleQueueSection()">
+                <h3><i class="fas fa-layer-group"></i> Queue Name Breakdown</h3>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span class="queue-badge">
+                        <i class="fas fa-list"></i>
+                        <span id="queueTotalCount">0</span> Queues
+                    </span>
+                    <i class="fas fa-chevron-down" id="queueIcon" style="color: var(--accent-purple); transition: transform 0.3s;"></i>
+                </div>
+            </div>
+            <div class="queue-content" id="queueContent">
+                <div class="queue-grid" id="queueGrid"></div>
+                <div id="queueNoData" class="queue-no-data" style="display: none;">
+                    <i class="fas fa-layer-group"></i><br>
+                    No queue data available for this shift.
+                </div>
+            </div>
+        </div>
+
         <!-- Summary Section -->
         <div class="summary-section">
             <div class="summary-header" onclick="toggleSummary()">
@@ -551,9 +722,9 @@
         // CONFIG
         // ==========================================
         const API_URL = "https://script.google.com/macros/s/AKfycbzuJ-olxHqLh0zC0T3aQD7CUN4hvE1iBZmvc73UZ0v7GKkQqeYRiwVVMlH03GeCSou3/exec";
-        const LS_PREFIX   = 'gt_dash_v2_';   // bump version to bust old cache
+        const LS_PREFIX   = 'gt_dash_v3_';   // bump version to bust old cache
         const REFRESH_MS  = 30000;           // 30s — matches backend 25s cache TTL
-        
+
         let currentUser       = "";
         let refreshInterval;
         let cachedData        = {};
@@ -632,6 +803,20 @@
         function toggleSummary() {
             $('#summaryContent').slideToggle(300);
             $('#summaryIcon').toggleClass('fa-chevron-down fa-chevron-up');
+        }
+
+        // ==========================================
+        // QUEUE SECTION TOGGLE
+        // ==========================================
+        function toggleQueueSection() {
+            $('#queueContent').slideToggle(300);
+            $('#queueHeader').toggleClass('active');
+            const icon = $('#queueIcon');
+            if (icon.css('transform') === 'none' || icon.css('transform') === 'matrix(1, 0, 0, 1, 0, 0)') {
+                icon.css('transform', 'rotate(180deg)');
+            } else {
+                icon.css('transform', 'rotate(0deg)');
+            }
         }
 
         // ==========================================
@@ -818,6 +1003,9 @@
             }
             $('#unitDetails').html(unitHtml);
 
+            // ===== QUEUE NAME BREAKDOWN =====
+            renderQueueBreakdown(data.byQueue);
+
             // Daily Summary
             if (data.dailySummary) {
                 const ds = data.dailySummary;
@@ -832,6 +1020,68 @@
                 $('#sumOverLidarQa').text(ds.overnight.lidarQa); $('#sumOverLaneFp').text(ds.overnight.laneFp);
                 $('#sumOverLaneQa').text(ds.overnight.laneQa);
             }
+        }
+
+        // ==========================================
+        // RENDER QUEUE NAME BREAKDOWN
+        // ==========================================
+        function renderQueueBreakdown(byQueue) {
+            const queues = byQueue || {};
+            const queueKeys = Object.keys(queues);
+
+            $('#queueTotalCount').text(queueKeys.length);
+
+            if (queueKeys.length === 0) {
+                $('#queueGrid').empty();
+                $('#queueNoData').show();
+                return;
+            }
+
+            $('#queueNoData').hide();
+
+            // Sort by total tasks descending
+            const sortedQueues = queueKeys.sort((a, b) => queues[b].total - queues[a].total);
+
+            let html = '';
+            sortedQueues.forEach(queueName => {
+                const q = queues[queueName];
+                html += `
+                    <div class="queue-card">
+                        <div class="queue-card-header">
+                            <div class="queue-card-name">${queueName}</div>
+                            <div class="queue-card-total">${q.total}</div>
+                        </div>
+                        <div class="queue-card-breakdown">
+                            <div class="queue-break-item queue-break-lidar-fp">
+                                <span class="queue-break-label">
+                                    <i class="fas fa-circle" style="color:var(--accent-green);"></i> LIDAR FP
+                                </span>
+                                <span class="queue-break-value">${q.lidarFp}</span>
+                            </div>
+                            <div class="queue-break-item queue-break-lidar-qa">
+                                <span class="queue-break-label">
+                                    <i class="fas fa-circle" style="color:#4caf50;"></i> LIDAR QA
+                                </span>
+                                <span class="queue-break-value">${q.lidarQa}</span>
+                            </div>
+                            <div class="queue-break-item queue-break-lane-fp">
+                                <span class="queue-break-label">
+                                    <i class="fas fa-circle" style="color:var(--accent-red);"></i> LANE FP
+                                </span>
+                                <span class="queue-break-value">${q.laneFp}</span>
+                            </div>
+                            <div class="queue-break-item queue-break-lane-qa">
+                                <span class="queue-break-label">
+                                    <i class="fas fa-circle" style="color:#ff7043;"></i> LANE QA
+                                </span>
+                                <span class="queue-break-value">${q.laneQa}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            $('#queueGrid').html(html);
         }
 
         // ==========================================
